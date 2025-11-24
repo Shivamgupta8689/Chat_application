@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Left from './left/left'
+import Left from './left/Left'
 import Right from './right/Right'
 import Logout from './left1/Logout'
 import Signup from './components/Signup'
