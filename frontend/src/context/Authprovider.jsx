@@ -6,11 +6,11 @@ export const AuthContext = createContext();
 export const Authprovider = ({ children }) => {
     const getInitialUser = () => {
         try {
-            const userData = Cookies.get("jwt");
+            const userData = localStorage.getItem("messenger");
             return userData ? JSON.parse(userData) : null;
         } catch (error) {
             console.error("Failed to parse user data:", error);
-            Cookies.remove("jwt"); // Clean up invalid data
+            localStorage.removeItem("messenger"); // Clean up invalid data
             return null;
         }
     };
