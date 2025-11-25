@@ -8,7 +8,7 @@ export const createTokenSaveCookie = (userId, res) => {
     res.cookie("jwt", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "None",
         path: "/",
         maxAge: 5 * 24 * 60 * 60 * 1000 // 5 days
     });
