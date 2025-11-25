@@ -4,26 +4,28 @@ import axios from 'axios'
 import API from '../utils/axiosInstance'
 
 const GetAllUser = () => {
-    const [allUsers, setAllUser] = useState([]);
-    const [loading, setLoading] = useState(false);
-  
-    useEffect(() => {
-      const getUser = async () => {
-        setLoading(true);
-        try {
-          const response = await API.get("/api/user/getUserProfile");
-          setAllUser(response.data.filteredUser);
-        } catch (error) {
-          console.log("Error in GetAllUser: ", error.response?.data || error.message);
-        } finally {
-          setLoading(false);
+    const [allUsers, setAllUser] = useState([])
+    const [loading, setLoading] = useState([])
+    useEffect(()=>{
+        const getUser = async ()=>{
+            setLoading(true);
+            try {
+                const token = Cookies.get("jwt")
+                const response = await API.get("/api/user/getUserProfile", {
+                    withCredentials: true,,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                setAllUser(response.data.filteredUser)
+                setLoading(false)
+            } catch (error) {
+                console.log("Error in GetAllUser" + error)
+            }
         }
-      };
-      getUser();
-    }, []);
-  
-    return [allUsers, loading];
-  };
-  
+        getUser()
+    }, [])
+    return [allUsers , loading]
+}
 
 export default GetAllUser
