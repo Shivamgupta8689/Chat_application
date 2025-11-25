@@ -14,7 +14,7 @@ const GetAllUser = () => {
                 const response = await API.get("/api/user/getUserProfile", {
                     withCredentials: true,
                     headers: {
-                        Authorization: `Bearer ${JSON.parse(token)}`,
+                        Authorization: `Bearer ${token}`,
                     }
                 })
                 setAllUser(response.data.filteredUser)
