@@ -4,6 +4,7 @@ import axios from "axios"
 import { useAuth } from '../context/Authprovider'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import API from '../utils/axiosInstance'
 
 const Signup = () => {
   const { authUser, setAuthUser } = useAuth()
@@ -33,7 +34,7 @@ const Signup = () => {
     formData.append("confirmpassword", data.confirmpassword);
     formData.append("image", image); 
 
-    await axios.post("/api/user/signup", formData, {
+    await API.post("/api/user/signup", formData, {
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then((response) => {

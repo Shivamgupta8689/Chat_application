@@ -4,13 +4,14 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import API from '../utils/axiosInstance';
 const Logout = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
   const handleLogout = async ()=>{
     setLoading(true)
     try {
-      await axios.post("/api/user/logout");
+      await API.post("/api/user/logout");
       localStorage.removeItem("messenger")
       Cookies.remove("jwt")
       setLoading(false)

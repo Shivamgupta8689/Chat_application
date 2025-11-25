@@ -4,6 +4,7 @@ import axios from "axios"
 import { useAuth } from '../context/Authprovider'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import API from '../utils/axiosInstance'
 
 const Login = () => {
   const {authUser, setAuthUser} = useAuth()
@@ -17,7 +18,7 @@ const Login = () => {
       email: data.email,
       password: data.password,
     };
-    await axios.post("/api/user/login", userInfo)
+    await API.post("/api/user/login", userInfo)
     .then((response)=>{
       if(response.data){
         toast.success("Login Successful!")
