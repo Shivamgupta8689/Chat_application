@@ -1,15 +1,16 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react'
+import Cookies from "js-cookie"
 
 export const AuthContext = createContext();
 
 export const Authprovider = ({ children }) => {
     const getInitialUser = () => {
         try {
-            const storedUser = localStorage.getItem("messenger");
-            return storedUser ? JSON.parse(storedUser) : null;
+            const userData = Cookies.get("jwt");
+            return userData ? JSON.parse(userData) : null;
         } catch (error) {
-            console.error("Failed to parse user:", error);
-            localStorage.removeItem("messenger");
+            console.error("Failed to parse user data:", error);
+            Cookies.remove("jwt"); // Clean up invalid data
             return null;
         }
     };
@@ -20,7 +21,13 @@ export const Authprovider = ({ children }) => {
         <AuthContext.Provider value={{ authUser, setAuthUser }}>
             {children}
         </AuthContext.Provider>
-    );
-};
+    )
+}
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};
