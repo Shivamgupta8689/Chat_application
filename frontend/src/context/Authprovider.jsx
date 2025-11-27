@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export const Authprovider = ({ children }) => {
     const getInitialUser = () => {
         try {
+            if (typeof window === "undefined") return null;
             const storedUser = localStorage.getItem("messenger");
             return storedUser ? JSON.parse(storedUser) : null;
         } catch (error) {
