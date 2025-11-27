@@ -16,6 +16,14 @@ export const Authprovider = ({ children }) => {
     };
 
     const [authUser, setAuthUser] = useState(getInitialUser());
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        if (authUser) {
+            localStorage.setItem("messenger", JSON.stringify(authUser));
+        } else {
+            localStorage.removeItem("messenger");
+        }
+    }, [authUser]);
 
     return (
         <AuthContext.Provider value={{ authUser, setAuthUser }}>
