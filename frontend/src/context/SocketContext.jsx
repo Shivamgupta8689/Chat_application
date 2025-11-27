@@ -17,11 +17,11 @@ export const SocketProvider = ({ children }) => {
     import.meta.env.VITE_BACKEND_URL || "http://localhost:5001";
 
   useEffect(() => {
-    if (authUser) {
+    const userId = authUser?.user?._id;
+
+    if (userId) {
       const newSocket = io(backendURL, {
-        query: {
-          userId: authUser.user._id,
-        },
+        query: { userId },
         transports: ["websocket"],
       });
 
@@ -36,7 +36,6 @@ export const SocketProvider = ({ children }) => {
         setSocket(null);
       };
     } else {
-      // logout case
       if (socket) {
         socket.disconnect();
         setSocket(null);
