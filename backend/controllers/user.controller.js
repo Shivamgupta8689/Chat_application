@@ -58,46 +58,30 @@ export const userSignup = async (req,res)=>{
     }
 };
 
-export const userLogin = async (req, res) => {
+export const userLogin = async (req,res)=>{
     try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password"
-            });
+        const {email,password} = req.body;
+        const user = await User.findOne({email});
+        if(!user){
+            res.status(404).json({message: "User not found"})
         }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password"
-            });
+        const isMatch = await bcrypt.compare(password,user.password)
+        if(!isMatch){
+            res.status(404).json({message: "User not found"})
         }
-
-        // create cookie
-        createTokenSaveCookie(user._id, res);
-
-        return res.status(200).json({
-            success: true,
+        createTokenSaveCookie(user._id,res);
+        return res.status(201).json({
             message: "User Logged in Successfully",
             user: {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                profilePic: user.profilePic,
             }
-        });
-
+        })
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Server error" });
+        return res.status(500).json({message: "Server error"})
     }
-};
-
+}
 
 export const userLogout = async (req,res) =>{
     try{
