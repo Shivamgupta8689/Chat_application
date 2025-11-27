@@ -38,15 +38,13 @@ const Signup = () => {
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then((response) => {
-        toast.success("Signup Successful! You can now 
-        login");
+        toast.success("Signup Successful! You can now login");
         localStorage.setItem("messenger", JSON.stringify
         (response.data));
         setAuthUser(response.data);
       })
       .catch((error) => {
-        toast.error(error.response?.data?.message || 
-        "Something went wrong");
+        toast.error(error.response?.data?.message || "Something went wrong");
       });
   }
 
