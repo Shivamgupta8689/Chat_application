@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const backendURL =
-  import.meta.env.VITE_BACKEND_URL ||
-  (import.meta.env.DEV ? "http://localhost:5001" : "");
+  import.meta.env.VITE_BACKEND_URL;
 
 if (!backendURL) {
   throw new Error(
